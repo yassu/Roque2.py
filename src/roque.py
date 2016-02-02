@@ -17,6 +17,15 @@ class Cell(QtGui.QPushButton):
         self.setFixedWidth(CELL_WIDTH)
         self.setFixedHeight(CELL_HEIGHT)
 
+class LoadCell(Cell):
+    pass
+
+class UserCell(Cell):
+    def __init__(self, master=None):
+       super(UserCell, self).__init__(master)
+       # self.setIcon(QtGui.QIcon('robo.png'))
+       self.setText('U')
+
 class Bord(QtGui.QWidget):
     def __init__(self, master=None):
         super(Bord, self).__init__(master)
@@ -31,7 +40,7 @@ class Bord(QtGui.QWidget):
             [0 for y in range(CELL_MAX_Y)] for x in range(CELL_MAX_X)]
         for i in range(CELL_MAX_Y):
             for j in range(CELL_MAX_X):
-                self.cell_mat[i][j] = Cell(master=self)
+                self.cell_mat[i][j] = LoadCell(master=self)
                 grid.addWidget(self.cell_mat[i][j], i, j)
 
 def main():

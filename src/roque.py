@@ -2,6 +2,7 @@
 # coding: UTF-8
 
 from PyQt4 import QtGui
+from random import randint
 import sys
 
 WINDOW_SIZE = (400, 400)
@@ -12,6 +13,16 @@ class Bord(QtGui.QWidget):
         super(Bord, self).__init__(master)
         self.initUI()
         self.show()
+
+    def initUI(self):
+        grid = QtGui.QGridLayout()
+        self.setLayout(grid)
+        self.cell_mat = [
+            [0 for y in range(CELL_MAX_Y)] for x in range(CELL_MAX_X)]
+        for i in range(CELL_MAX_Y):
+            for j in range(CELL_MAX_X):
+                self.cell_mat[i][j] = QtGui.QPushButton('({}, {})'.format(i, j))
+                grid.addWidget(self.cell_mat[i][j], i, j)
 
 def main():
     app = QtGui.QApplication(sys.argv)

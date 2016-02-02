@@ -10,6 +10,13 @@ CELL_MAX_X = CELL_MAX_Y = 15
 CELL_WIDTH = CELL_HEIGHT = 32
 SPACING_BETWEEN_CELLS = 1
 
+class Cell(QtGui.QPushButton):
+    def __init__(self, master=None):
+        super(Cell, self).__init__(master)
+        self.setStyleSheet("background-color: black")
+        self.setFixedWidth(CELL_WIDTH)
+        self.setFixedHeight(CELL_HEIGHT)
+
 class Bord(QtGui.QWidget):
     def __init__(self, master=None):
         super(Bord, self).__init__(master)
@@ -24,10 +31,7 @@ class Bord(QtGui.QWidget):
             [0 for y in range(CELL_MAX_Y)] for x in range(CELL_MAX_X)]
         for i in range(CELL_MAX_Y):
             for j in range(CELL_MAX_X):
-                self.cell_mat[i][j] = QtGui.QPushButton()
-                self.cell_mat[i][j].setStyleSheet("background-color: black")
-                self.cell_mat[i][j].setFixedWidth(CELL_WIDTH)
-                self.cell_mat[i][j].setFixedHeight(CELL_HEIGHT)
+                self.cell_mat[i][j] = Cell(master=self)
                 grid.addWidget(self.cell_mat[i][j], i, j)
 
 def main():

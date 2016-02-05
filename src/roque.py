@@ -42,6 +42,8 @@ class Bord(QtGui.QWidget):
             for j in range(CELL_MAX_X):
                 self.cell_mat[i][j] = LoadCell(master=self)
                 grid.addWidget(self.cell_mat[i][j], i, j)
+        usercell = UserCell(self)
+        grid.addWidget(usercell, 1, 1)
 
 def main():
     app = QtGui.QApplication(sys.argv)

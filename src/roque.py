@@ -11,6 +11,9 @@ CELL_MAX_X = CELL_MAX_Y = 15
 CELL_WIDTH = CELL_HEIGHT = 32
 SPACING_BETWEEN_CELLS = 1
 
+DEFAULT_ROBOT_POS = (1, 1)
+
+
 class Cell(QtWidgets.QPushButton):
     def __init__(self, master=None):
         super(Cell, self).__init__(master)
@@ -18,18 +21,27 @@ class Cell(QtWidgets.QPushButton):
         self.setFixedWidth(CELL_WIDTH)
         self.setFixedHeight(CELL_HEIGHT)
 
+
 class LoadCell(Cell):
     pass
 
+
 class UserCell(Cell):
-    def __init__(self, master=None):
+    def __init__(self, master=None, pos=None):
        super(UserCell, self).__init__(master)
        self.setIcon(QtGui.QIcon('robo.png'))
        self.setText('U')
+       self._pos = pos
+
+    def move(self, vec):
+        self._pos[0] += vec[0]
+        self._pos[1] += vec[1]
+
 
 class Bord(QtWidgets.QWidget):
     def __init__(self, master=None):
         super(Bord, self).__init__(master)
+
         self.initUI()
         self.show()
 
@@ -43,8 +55,9 @@ class Bord(QtWidgets.QWidget):
             for j in range(CELL_MAX_X):
                 self.cell_mat[i][j] = LoadCell(master=self)
                 grid.addWidget(self.cell_mat[i][j], i, j)
-        usercell = UserCell(self)
-        grid.addWidget(usercell, 1, 1)
+        usercell = UserCell(self, pos=list(DEFAULT_ROBOT_POS))
+        grid.addWidget(usercell, DEFAULT_ROBOT_POS[0], DEFAULT_ROBOT_POS[1])
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

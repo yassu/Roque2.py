@@ -5,6 +5,7 @@ from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 from random import randint
 import sys
+import time
 
 WINDOW_SIZE = (400, 400)
 CELL_MAX_X = CELL_MAX_Y = 15
@@ -42,21 +43,29 @@ class Bord(QtWidgets.QWidget):
     def __init__(self, master=None):
         super(Bord, self).__init__(master)
 
+        self._grid = QtWidgets.QGridLayout()
         self.initUI()
         self.show()
 
     def initUI(self):
-        grid = QtWidgets.QGridLayout()
-        grid.setSpacing(SPACING_BETWEEN_CELLS)
-        self.setLayout(grid)
+        self._grid.setSpacing(SPACING_BETWEEN_CELLS)
+        self.setLayout(self._grid)
         self.cell_mat = [
             [0 for y in range(CELL_MAX_Y)] for x in range(CELL_MAX_X)]
         for i in range(CELL_MAX_Y):
             for j in range(CELL_MAX_X):
                 self.cell_mat[i][j] = LoadCell(master=self)
-                grid.addWidget(self.cell_mat[i][j], i, j)
+                self._grid.addWidget(self.cell_mat[i][j], i, j)
         usercell = UserCell(self, pos=list(DEFAULT_ROBOT_POS))
-        grid.addWidget(usercell, DEFAULT_ROBOT_POS[0], DEFAULT_ROBOT_POS[1])
+        self._grid.addWidget(usercell, DEFAULT_ROBOT_POS[0], DEFAULT_ROBOT_POS[1])
+        self.update()
+
+
+    def update(self):
+        time.sleep(3)
+        self._grid.removeWidget(self.cell_mat[1][1])
+        self.cell_mat[1][1].setParent(None)
+        print("stu")
 
 
 def main():

@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # coding: UTF-8
 
-from PyQt4 import QtGui
+from PyQt5 import QtGui
+from PyQt5 import QtWidgets
 from random import randint
 import sys
 
@@ -10,7 +11,7 @@ CELL_MAX_X = CELL_MAX_Y = 15
 CELL_WIDTH = CELL_HEIGHT = 32
 SPACING_BETWEEN_CELLS = 1
 
-class Cell(QtGui.QPushButton):
+class Cell(QtWidgets.QPushButton):
     def __init__(self, master=None):
         super(Cell, self).__init__(master)
         self.setStyleSheet("background-color: black")
@@ -23,17 +24,17 @@ class LoadCell(Cell):
 class UserCell(Cell):
     def __init__(self, master=None):
        super(UserCell, self).__init__(master)
-       # self.setIcon(QtGui.QIcon('robo.png'))
+       self.setIcon(QtGui.QIcon('robo.png'))
        self.setText('U')
 
-class Bord(QtGui.QWidget):
+class Bord(QtWidgets.QWidget):
     def __init__(self, master=None):
         super(Bord, self).__init__(master)
         self.initUI()
         self.show()
 
     def initUI(self):
-        grid = QtGui.QGridLayout()
+        grid = QtWidgets.QGridLayout()
         grid.setSpacing(SPACING_BETWEEN_CELLS)
         self.setLayout(grid)
         self.cell_mat = [
@@ -46,7 +47,7 @@ class Bord(QtGui.QWidget):
         grid.addWidget(usercell, 1, 1)
 
 def main():
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     ex = Bord()
     sys.exit(app.exec_())
 
